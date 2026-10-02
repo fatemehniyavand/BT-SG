@@ -1,0 +1,59 @@
+BT → SWI-Prolog → STATIC GRAPH: complete Music + Art tree (no user question)
+==========================================================================
+1. Python reads and validates the selected BehaviorTree.json.
+   Root ID: n0  |  source nodes: 26
+2. Python emits bt_node/bt_child/bt_root and declared access/3 facts.
+   Saved source facts: /Users/fatemeh/FiveGProject2026/BT-SG-Orchestration-Prolog-Neo4j 2/outputs/service_graph.facts.pl
+3. Real SWI-Prolog converter.pl infers the structural and possible-data layers.
+   Full BT nodes: 26
+   Parent/child control edges: 25
+   Ordered sibling gates: 14
+   Loop annotations: 1
+   All candidate data edges: 20
+   Action-only possible data edges: 16
+4. Separate Python architectural view adds annotated conditional routes.
+   Services: 9, keys: 4, gateways: 3.
+   IMPORTANT: conditional_flow is curated in Python, not proved by Prolog.
+5. Inspect exactly what the project defined for Blackboard:
+   Ask clarifying question: READS intent
+   Ask clarifying question: READS slots
+   Ask clarifying question: WRITES slots
+   DetectInetent: WRITES intent
+   DetectInetent: READS normalized_input
+   DetectInetent: READS topic
+   ActionQueryArt: READS intent
+   ActionQueryArt: READS slots
+   ActionQueryArt: READS topic
+   ActionQueryMusic: READS intent
+   ActionQueryMusic: READS slots
+   ActionQueryMusic: READS topic
+   Naive Bayes Topic Classifier: READS normalized_input
+   Naive Bayes Topic Classifier: WRITES topic
+   Build Answer Context: READS intent
+   Build Answer Context: READS slots
+   Build Answer Context: READS topic
+   Shared LLM — Final Answer Only: READS intent
+   Shared LLM — Final Answer Only: READS slots
+   Shared LLM — Final Answer Only: READS topic
+   Normalize Input: WRITES normalized_input
+
+6. Main presentation path (not a per-question runtime trace):
+   Input modality (Voice / Text) --[voice]--> Speech To Text
+   Input modality (Voice / Text) --[text]--> Normalize Input
+   Speech To Text --[voice_transcribed]--> Normalize Input
+   Normalize Input --[success]--> Naive Bayes Topic Classifier
+   Naive Bayes Topic Classifier --[success]--> DetectInetent
+   DetectInetent --[success]--> Slot filling controller
+   Slot filling controller --[slots_missing]--> Ask clarifying question
+   Ask clarifying question --[repeat_after_reply]--> Slot filling controller
+   Slot filling controller --[slots_complete]--> Topic router
+   Topic router --[topic_music]--> ActionQueryMusic
+   Topic router --[topic_art]--> ActionQueryArt
+   ActionQueryMusic --[music_result]--> Build Answer Context
+   ActionQueryArt --[art_result]--> Build Answer Context
+   Build Answer Context --[ready_to_verbalize]--> Shared LLM — Final Answer Only
+
+WARNING: potential_data does not establish path feasibility, execution order,
+or CPU/RAM requirements. The current text demo is not full py_trees runtime.
+Graph JSON: /Users/fatemeh/FiveGProject2026/BT-SG-Orchestration-Prolog-Neo4j 2/outputs/service_graph.json
+Facts file: /Users/fatemeh/FiveGProject2026/BT-SG-Orchestration-Prolog-Neo4j 2/outputs/service_graph.facts.pl

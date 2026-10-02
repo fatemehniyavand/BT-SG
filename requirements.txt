@@ -1,0 +1,5 @@
+pyswip
+neo4j
+py_trees
+python-socketio
+eventlet

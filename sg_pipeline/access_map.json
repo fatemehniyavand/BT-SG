@@ -1,0 +1,78 @@
+{
+  "ActionSpeechToText": {},
+  "ActionNormalizeInput": {
+    "writes": [
+      "normalized_input"
+    ]
+  },
+  "ActionNaiveBayesTopicClassifier": {
+    "reads": [
+      "normalized_input"
+    ],
+    "writes": [
+      "topic"
+    ]
+  },
+  "Detect Intern": {
+    "reads": [
+      "normalized_input",
+      "topic"
+    ],
+    "writes": [
+      "intent"
+    ]
+  },
+  "Slots Not Filled": {
+    "reads": [
+      "slots",
+      "intent"
+    ]
+  },
+  "Ask clarifying question": {
+    "reads": [
+      "slots",
+      "intent"
+    ],
+    "writes": [
+      "slots"
+    ]
+  },
+  "ConditionTopicIsTelecom": {
+    "reads": [
+      "topic"
+    ]
+  },
+  "ConditionTopicIsAI": {
+    "reads": [
+      "topic"
+    ]
+  },
+  "ActionQueryMusic": {
+    "reads": [
+      "topic",
+      "intent",
+      "slots"
+    ]
+  },
+  "ActionQueryArt": {
+    "reads": [
+      "topic",
+      "intent",
+      "slots"
+    ]
+  },
+  "ActionBuildAnswerContext": {
+    "reads": [
+      "topic",
+      "intent",
+      "slots"
+    ]
+  },
+  "ActionSharedLLM": {
+    "reads": [
+      "topic",
+      "intent",
+      "slots"
+    ]
+  }
+}

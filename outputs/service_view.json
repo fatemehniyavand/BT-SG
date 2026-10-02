@@ -1,0 +1,346 @@
+{
+  "graph_id": "dialogue-service-v1",
+  "source_graph_id": "dialogue-tree-v1",
+  "mode": "static_architectural_projection",
+  "notice": "Service/data edges are potential from Prolog and explicit access contracts. Conditional flow is a documented design projection, not a runtime trace.",
+  "services": [
+    {
+      "id": "n5",
+      "name": "Speech To Text",
+      "source_node_id": "n5",
+      "source_name": "ActionSpeechToText"
+    },
+    {
+      "id": "n8",
+      "name": "Normalize Input",
+      "source_node_id": "n8",
+      "source_name": "ActionNormalizeInput"
+    },
+    {
+      "id": "n10",
+      "name": "Naive Bayes Topic Classifier",
+      "source_node_id": "n10",
+      "source_name": "ActionNaiveBayesTopicClassifier"
+    },
+    {
+      "id": "n32",
+      "name": "Build Answer Context",
+      "source_node_id": "n32",
+      "source_name": "ActionBuildAnswerContext"
+    },
+    {
+      "id": "n33",
+      "name": "Shared LLM — Final Answer Only",
+      "source_node_id": "n33",
+      "source_name": "ActionSharedLLM"
+    },
+    {
+      "id": "1211aae4-2979-4751-8e7e-e7c436fe4205",
+      "name": "DetectInetent",
+      "source_node_id": "1211aae4-2979-4751-8e7e-e7c436fe4205",
+      "source_name": "Detect Intern"
+    },
+    {
+      "id": "00cc8681-30d6-43df-8e3a-dd33f55d67dd",
+      "name": "Ask clarifying question",
+      "source_node_id": "00cc8681-30d6-43df-8e3a-dd33f55d67dd",
+      "source_name": "Ask clarifying question"
+    },
+    {
+      "id": "d0440585-6d67-4509-948d-0d4a892917cc",
+      "name": "ActionQueryMusic",
+      "source_node_id": "d0440585-6d67-4509-948d-0d4a892917cc",
+      "source_name": "ActionQueryMusic"
+    },
+    {
+      "id": "886b1a32-96f3-483e-a77c-5551f1934510",
+      "name": "ActionQueryArt",
+      "source_node_id": "886b1a32-96f3-483e-a77c-5551f1934510",
+      "source_name": "ActionQueryArt"
+    }
+  ],
+  "blackboard_keys": [
+    "normalized_input",
+    "topic",
+    "intent",
+    "slots"
+  ],
+  "access": [
+    {
+      "service": "00cc8681-30d6-43df-8e3a-dd33f55d67dd",
+      "key": "intent",
+      "direction": "reads"
+    },
+    {
+      "service": "00cc8681-30d6-43df-8e3a-dd33f55d67dd",
+      "key": "slots",
+      "direction": "reads"
+    },
+    {
+      "service": "00cc8681-30d6-43df-8e3a-dd33f55d67dd",
+      "key": "slots",
+      "direction": "writes"
+    },
+    {
+      "service": "1211aae4-2979-4751-8e7e-e7c436fe4205",
+      "key": "intent",
+      "direction": "writes"
+    },
+    {
+      "service": "1211aae4-2979-4751-8e7e-e7c436fe4205",
+      "key": "normalized_input",
+      "direction": "reads"
+    },
+    {
+      "service": "1211aae4-2979-4751-8e7e-e7c436fe4205",
+      "key": "topic",
+      "direction": "reads"
+    },
+    {
+      "service": "886b1a32-96f3-483e-a77c-5551f1934510",
+      "key": "intent",
+      "direction": "reads"
+    },
+    {
+      "service": "886b1a32-96f3-483e-a77c-5551f1934510",
+      "key": "slots",
+      "direction": "reads"
+    },
+    {
+      "service": "886b1a32-96f3-483e-a77c-5551f1934510",
+      "key": "topic",
+      "direction": "reads"
+    },
+    {
+      "service": "d0440585-6d67-4509-948d-0d4a892917cc",
+      "key": "intent",
+      "direction": "reads"
+    },
+    {
+      "service": "d0440585-6d67-4509-948d-0d4a892917cc",
+      "key": "slots",
+      "direction": "reads"
+    },
+    {
+      "service": "d0440585-6d67-4509-948d-0d4a892917cc",
+      "key": "topic",
+      "direction": "reads"
+    },
+    {
+      "service": "n10",
+      "key": "normalized_input",
+      "direction": "reads"
+    },
+    {
+      "service": "n10",
+      "key": "topic",
+      "direction": "writes"
+    },
+    {
+      "service": "n32",
+      "key": "intent",
+      "direction": "reads"
+    },
+    {
+      "service": "n32",
+      "key": "slots",
+      "direction": "reads"
+    },
+    {
+      "service": "n32",
+      "key": "topic",
+      "direction": "reads"
+    },
+    {
+      "service": "n33",
+      "key": "intent",
+      "direction": "reads"
+    },
+    {
+      "service": "n33",
+      "key": "slots",
+      "direction": "reads"
+    },
+    {
+      "service": "n33",
+      "key": "topic",
+      "direction": "reads"
+    },
+    {
+      "service": "n8",
+      "key": "normalized_input",
+      "direction": "writes"
+    }
+  ],
+  "potential_service_data": [
+    {
+      "source": "00cc8681-30d6-43df-8e3a-dd33f55d67dd",
+      "target": "886b1a32-96f3-483e-a77c-5551f1934510",
+      "key": "slots"
+    },
+    {
+      "source": "00cc8681-30d6-43df-8e3a-dd33f55d67dd",
+      "target": "d0440585-6d67-4509-948d-0d4a892917cc",
+      "key": "slots"
+    },
+    {
+      "source": "00cc8681-30d6-43df-8e3a-dd33f55d67dd",
+      "target": "n32",
+      "key": "slots"
+    },
+    {
+      "source": "00cc8681-30d6-43df-8e3a-dd33f55d67dd",
+      "target": "n33",
+      "key": "slots"
+    },
+    {
+      "source": "1211aae4-2979-4751-8e7e-e7c436fe4205",
+      "target": "00cc8681-30d6-43df-8e3a-dd33f55d67dd",
+      "key": "intent"
+    },
+    {
+      "source": "1211aae4-2979-4751-8e7e-e7c436fe4205",
+      "target": "886b1a32-96f3-483e-a77c-5551f1934510",
+      "key": "intent"
+    },
+    {
+      "source": "1211aae4-2979-4751-8e7e-e7c436fe4205",
+      "target": "d0440585-6d67-4509-948d-0d4a892917cc",
+      "key": "intent"
+    },
+    {
+      "source": "1211aae4-2979-4751-8e7e-e7c436fe4205",
+      "target": "n32",
+      "key": "intent"
+    },
+    {
+      "source": "1211aae4-2979-4751-8e7e-e7c436fe4205",
+      "target": "n33",
+      "key": "intent"
+    },
+    {
+      "source": "n10",
+      "target": "1211aae4-2979-4751-8e7e-e7c436fe4205",
+      "key": "topic"
+    },
+    {
+      "source": "n10",
+      "target": "886b1a32-96f3-483e-a77c-5551f1934510",
+      "key": "topic"
+    },
+    {
+      "source": "n10",
+      "target": "d0440585-6d67-4509-948d-0d4a892917cc",
+      "key": "topic"
+    },
+    {
+      "source": "n10",
+      "target": "n32",
+      "key": "topic"
+    },
+    {
+      "source": "n10",
+      "target": "n33",
+      "key": "topic"
+    },
+    {
+      "source": "n8",
+      "target": "1211aae4-2979-4751-8e7e-e7c436fe4205",
+      "key": "normalized_input"
+    },
+    {
+      "source": "n8",
+      "target": "n10",
+      "key": "normalized_input"
+    }
+  ],
+  "gateways": [
+    {
+      "id": "gate:input",
+      "name": "Input modality (Voice / Text)",
+      "rule": "New input; voice or text"
+    },
+    {
+      "id": "gate:slots",
+      "name": "Slot filling controller",
+      "rule": "Missing mandatory slots? Loop until complete"
+    },
+    {
+      "id": "gate:topic",
+      "name": "Topic router",
+      "rule": "Music versus Art; exclusive branch"
+    }
+  ],
+  "conditional_flow": [
+    {
+      "source": "gate:input",
+      "target": "n5",
+      "guard": "voice"
+    },
+    {
+      "source": "gate:input",
+      "target": "n8",
+      "guard": "text"
+    },
+    {
+      "source": "n5",
+      "target": "n8",
+      "guard": "voice_transcribed"
+    },
+    {
+      "source": "n8",
+      "target": "n10",
+      "guard": "success"
+    },
+    {
+      "source": "n10",
+      "target": "1211aae4-2979-4751-8e7e-e7c436fe4205",
+      "guard": "success"
+    },
+    {
+      "source": "1211aae4-2979-4751-8e7e-e7c436fe4205",
+      "target": "gate:slots",
+      "guard": "success"
+    },
+    {
+      "source": "gate:slots",
+      "target": "00cc8681-30d6-43df-8e3a-dd33f55d67dd",
+      "guard": "slots_missing"
+    },
+    {
+      "source": "00cc8681-30d6-43df-8e3a-dd33f55d67dd",
+      "target": "gate:slots",
+      "guard": "repeat_after_reply"
+    },
+    {
+      "source": "gate:slots",
+      "target": "gate:topic",
+      "guard": "slots_complete"
+    },
+    {
+      "source": "gate:topic",
+      "target": "d0440585-6d67-4509-948d-0d4a892917cc",
+      "guard": "topic_music"
+    },
+    {
+      "source": "gate:topic",
+      "target": "886b1a32-96f3-483e-a77c-5551f1934510",
+      "guard": "topic_art"
+    },
+    {
+      "source": "d0440585-6d67-4509-948d-0d4a892917cc",
+      "target": "n32",
+      "guard": "music_result"
+    },
+    {
+      "source": "886b1a32-96f3-483e-a77c-5551f1934510",
+      "target": "n32",
+      "guard": "art_result"
+    },
+    {
+      "source": "n32",
+      "target": "n33",
+      "guard": "ready_to_verbalize"
+    }
+  ]
+}

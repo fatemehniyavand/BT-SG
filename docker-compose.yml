@@ -1,0 +1,10 @@
+services:
+  neo4j:
+    image: neo4j:5-community
+    ports: ["7474:7474", "7687:7687"]
+    environment:
+      NEO4J_AUTH: neo4j/${NEO4J_PASSWORD:?Set NEO4J_PASSWORD in your shell}
+    volumes:
+      - neo4j_bt_data:/data
+volumes:
+  neo4j_bt_data:

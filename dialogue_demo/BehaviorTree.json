@@ -1,0 +1,623 @@
+{
+  "version": "0.3.0",
+  "scope": "project",
+  "selectedTree": "dialogue-neo4j-answer-tree",
+  "trees": [
+    {
+      "version": "0.3.0",
+      "scope": "tree",
+      "id": "dialogue-neo4j-answer-tree",
+      "title": "General Dialogue Manager — Neo4j Answer Flow",
+      "description": "Right-to-left single-user behavior tree: voice/text input, normalization, Naive Bayes topic detection, Neo4j knowledge retrieval, and LLM final verbalization only.",
+      "root": "n0",
+      "properties": {},
+      "nodes": {
+        "n0": {
+          "id": "n0",
+          "name": "Sequence",
+          "title": "GENERAL DIALOGUE MANAGER",
+          "description": "Single-user dialogue flow from raw input to final answer.",
+          "properties": {},
+          "display": {
+            "x": 208,
+            "y": 0
+          },
+          "children": [
+            "n1",
+            "n2",
+            "n8",
+            "n9",
+            "1211aae4-2979-4751-8e7e-e7c436fe4205",
+            "c9c27d46-fadc-4ef0-8829-88430f6599a6",
+            "n11",
+            "5153d237-e535-48af-9269-4ee876a818c6"
+          ]
+        },
+        "n1": {
+          "id": "n1",
+          "name": "ConditionNewInputAvailable",
+          "title": "New Input Available?",
+          "description": "Succeeds when a new user input is available.",
+          "properties": {},
+          "display": {
+            "x": 416,
+            "y": -536.25
+          }
+        },
+        "n2": {
+          "id": "n2",
+          "name": "Fallback",
+          "title": "Resolve Input Modality",
+          "description": "Selects the Voice or Text input branch.",
+          "properties": {},
+          "display": {
+            "x": 416,
+            "y": -338.25
+          },
+          "children": [
+            "n3",
+            "n6"
+          ]
+        },
+        "n3": {
+          "id": "n3",
+          "name": "Sequence",
+          "title": "Voice Input",
+          "description": "",
+          "properties": {},
+          "display": {
+            "x": 624,
+            "y": -404.25
+          },
+          "children": [
+            "n4",
+            "n5"
+          ]
+        },
+        "n4": {
+          "id": "n4",
+          "name": "ConditionIsVoice",
+          "title": "Is Voice?",
+          "description": "",
+          "properties": {},
+          "display": {
+            "x": 832,
+            "y": -448.25
+          }
+        },
+        "n5": {
+          "id": "n5",
+          "name": "ActionSpeechToText",
+          "title": "Speech To Text",
+          "description": "Converts voice input into text inside the Behavior Tree.",
+          "properties": {},
+          "display": {
+            "x": 832,
+            "y": -360.25
+          }
+        },
+        "n6": {
+          "id": "n6",
+          "name": "Sequence",
+          "title": "Text Input",
+          "description": "",
+          "properties": {},
+          "display": {
+            "x": 624,
+            "y": -272.25
+          },
+          "children": [
+            "n7"
+          ]
+        },
+        "n7": {
+          "id": "n7",
+          "name": "ConditionIsText",
+          "title": "Is Text?",
+          "description": "",
+          "properties": {},
+          "display": {
+            "x": 832,
+            "y": -272.25
+          }
+        },
+        "n8": {
+          "id": "n8",
+          "name": "ActionNormalizeInput",
+          "title": "Normalize Input",
+          "description": "Normalizes the text before topic classification.",
+          "properties": {},
+          "display": {
+            "x": 416,
+            "y": -184.25
+          }
+        },
+        "n9": {
+          "id": "n9",
+          "name": "Sequence",
+          "title": "Detect Topic",
+          "description": "Detects the topic using a Naive Bayes classifier.",
+          "properties": {},
+          "display": {
+            "x": 416,
+            "y": -96.25
+          },
+          "children": [
+            "n10"
+          ]
+        },
+        "n10": {
+          "id": "n10",
+          "name": "ActionNaiveBayesTopicClassifier",
+          "title": "Naive Bayes Topic Classifier",
+          "description": "Classifies the normalized input into one topic.",
+          "properties": {
+            "model": "Naive Bayes"
+          },
+          "display": {
+            "x": 624,
+            "y": -96.25
+          }
+        },
+        "n11": {
+          "id": "n11",
+          "name": "Fallback",
+          "title": "Select Database",
+          "description": "Selects exactly one Neo4j knowledge source based on the detected topic.",
+          "properties": {},
+          "display": {
+            "x": 416,
+            "y": 387.75
+          },
+          "children": [
+            "n12",
+            "n15"
+          ]
+        },
+        "n12": {
+          "id": "n12",
+          "name": "Sequence",
+          "title": "Music",
+          "description": "",
+          "properties": {},
+          "display": {
+            "x": 624,
+            "y": 299.75
+          },
+          "children": [
+            "n13",
+            "d0440585-6d67-4509-948d-0d4a892917cc"
+          ]
+        },
+        "n13": {
+          "id": "n13",
+          "name": "ConditionTopicIsTelecom",
+          "title": "Topic == Music",
+          "description": "",
+          "properties": {},
+          "display": {
+            "x": 832,
+            "y": 255.75
+          }
+        },
+        "n15": {
+          "id": "n15",
+          "name": "Sequence",
+          "title": "Art",
+          "description": "",
+          "properties": {},
+          "display": {
+            "x": 624,
+            "y": 475.75
+          },
+          "children": [
+            "n16",
+            "886b1a32-96f3-483e-a77c-5551f1934510"
+          ]
+        },
+        "n16": {
+          "id": "n16",
+          "name": "ConditionTopicIsAI",
+          "title": "Topic == Art",
+          "description": "",
+          "properties": {},
+          "display": {
+            "x": 832,
+            "y": 431.75
+          }
+        },
+        "n32": {
+          "id": "n32",
+          "name": "ActionBuildAnswerContext",
+          "title": "Build Answer Context",
+          "description": "Builds the structured context that will be given to the final language generator.",
+          "properties": {},
+          "display": {
+            "x": 624,
+            "y": 607.75
+          }
+        },
+        "n33": {
+          "id": "n33",
+          "name": "ActionSharedLLM",
+          "title": "Shared LLM — Final Answer Only",
+          "description": "Uses the LLM only to verbalize the retrieved knowledge into the final answer.",
+          "properties": {},
+          "display": {
+            "x": 624,
+            "y": 695.75
+          }
+        },
+        "5153d237-e535-48af-9269-4ee876a818c6": {
+          "id": "5153d237-e535-48af-9269-4ee876a818c6",
+          "name": "Sequence",
+          "title": "Generate Answer",
+          "description": "Runs children in order; fails when one fails (AND)",
+          "properties": {},
+          "display": {
+            "x": 416,
+            "y": 651.75
+          },
+          "children": [
+            "n32",
+            "n33"
+          ]
+        },
+        "0151c83d-eed2-4d4c-adf9-4921399fbe0c": {
+          "id": "0151c83d-eed2-4d4c-adf9-4921399fbe0c",
+          "name": "Sequence",
+          "title": "Slot Filling",
+          "description": "Check mandatory slots; if missing, ask one question and wait for new user input.",
+          "properties": {},
+          "display": {
+            "x": 624,
+            "y": 123.75
+          },
+          "children": [
+            "902d98f0-a3ec-48ff-bf88-9dd365f78b7c",
+            "00cc8681-30d6-43df-8e3a-dd33f55d67dd"
+          ]
+        },
+        "1211aae4-2979-4751-8e7e-e7c436fe4205": {
+          "id": "1211aae4-2979-4751-8e7e-e7c436fe4205",
+          "name": "Detect Intern",
+          "title": "DetectInetent",
+          "description": "",
+          "properties": {},
+          "display": {
+            "x": 416,
+            "y": -8.25
+          }
+        },
+        "902d98f0-a3ec-48ff-bf88-9dd365f78b7c": {
+          "id": "902d98f0-a3ec-48ff-bf88-9dd365f78b7c",
+          "name": "Slots Not Filled",
+          "title": "Slots Not Filled",
+          "description": "SUCCESS if any mandatory slot is missing. FAILURE if all filled, ending RepeatUntilFailure.",
+          "properties": {},
+          "display": {
+            "x": 832,
+            "y": 167.75
+          }
+        },
+        "00cc8681-30d6-43df-8e3a-dd33f55d67dd": {
+          "id": "00cc8681-30d6-43df-8e3a-dd33f55d67dd",
+          "name": "Ask clarifying question",
+          "title": "Ask clarifying question",
+          "description": "",
+          "properties": {},
+          "display": {
+            "x": 832,
+            "y": 79.75
+          }
+        },
+        "c9c27d46-fadc-4ef0-8829-88430f6599a6": {
+          "id": "c9c27d46-fadc-4ef0-8829-88430f6599a6",
+          "name": "RepeatUntilFailure",
+          "title": "Repeat Until Failure",
+          "description": "Repeat CHECK then ASK while slots are missing. Child fails on completion, decorator succeeds.",
+          "properties": {
+            "maxLoop": -1
+          },
+          "display": {
+            "x": 375,
+            "y": 150
+          },
+          "child": "0151c83d-eed2-4d4c-adf9-4921399fbe0c"
+        },
+        "d0440585-6d67-4509-948d-0d4a892917cc": {
+          "id": "d0440585-6d67-4509-948d-0d4a892917cc",
+          "name": "ActionQueryMusic",
+          "title": "ActionQueryMusic",
+          "description": "",
+          "properties": {},
+          "display": {
+            "x": 1110,
+            "y": 405
+          }
+        },
+        "886b1a32-96f3-483e-a77c-5551f1934510": {
+          "id": "886b1a32-96f3-483e-a77c-5551f1934510",
+          "name": "ActionQueryArt",
+          "title": "ActionQueryArt",
+          "description": "",
+          "properties": {},
+          "display": {
+            "x": 930,
+            "y": 585
+          }
+        }
+      },
+      "display": {
+        "camera_x": 1750,
+        "camera_y": 1450,
+        "camera_z": 0.55,
+        "x": 0,
+        "y": 0
+      }
+    }
+  ],
+  "custom_nodes": [
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "Fallback",
+      "category": "composite",
+      "title": "Fallback",
+      "description": "Selector/fallback: evaluates children in order and returns on the first SUCCESS or RUNNING.",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ConditionNewInputAvailable",
+      "category": "condition",
+      "title": "New Input Available?",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ConditionIsVoice",
+      "category": "condition",
+      "title": "Is Voice?",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ConditionIsText",
+      "category": "condition",
+      "title": "Is Text?",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ConditionTopicIsTelecom",
+      "category": "condition",
+      "title": "Topic == Telecom",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ConditionTopicIsAI",
+      "category": "condition",
+      "title": "Topic == AI",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ConditionTopicIsDatabase",
+      "category": "condition",
+      "title": "Topic == Database",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ConditionTopicIsCloud",
+      "category": "condition",
+      "title": "Topic == Cloud",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ConditionTopicIsSecurity",
+      "category": "condition",
+      "title": "Topic == Security",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ConditionTopicIsGeneral",
+      "category": "condition",
+      "title": "Topic == General",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ActionSpeechToText",
+      "category": "action",
+      "title": "Speech To Text",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ActionNormalizeInput",
+      "category": "action",
+      "title": "Normalize Input",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ActionNaiveBayesTopicClassifier",
+      "category": "action",
+      "title": "Naive Bayes Topic Classifier",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ActionSelectTelecomNeo4jGraph",
+      "category": "action",
+      "title": "Select Telecom Neo4j Graph",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ActionSelectAINeo4jGraph",
+      "category": "action",
+      "title": "Select AI Neo4j Graph",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ActionSelectDatabaseNeo4jGraph",
+      "category": "action",
+      "title": "Select Database Neo4j Graph",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ActionSelectCloudNeo4jGraph",
+      "category": "action",
+      "title": "Select Cloud Neo4j Graph",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ActionSelectSecurityNeo4jGraph",
+      "category": "action",
+      "title": "Select Security Neo4j Graph",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ActionSelectGeneralNeo4jGraph",
+      "category": "action",
+      "title": "Select General Neo4j Graph",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ActionRetrieveKnowledge",
+      "category": "action",
+      "title": "Retrieve Knowledge",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ActionBuildAnswerContext",
+      "category": "action",
+      "title": "Build Answer Context",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ActionSharedLLM",
+      "category": "action",
+      "title": "Shared LLM — Final Answer Only",
+      "description": "",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "Detect Intern",
+      "category": "action",
+      "title": "DetectInetent",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "Slot Filinf",
+      "category": "action",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "Detect Intent",
+      "category": "action",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "Ask clarifying question",
+      "category": "action",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "Slots Not Filled",
+      "category": "condition",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "Music Query",
+      "category": "action",
+      "title": "Query Neo4j",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ActionQueryMusic",
+      "category": "action",
+      "properties": {}
+    },
+    {
+      "version": "0.3.0",
+      "scope": "node",
+      "name": "ActionQueryArt",
+      "category": "action",
+      "properties": {}
+    }
+  ],
+  "id": "dialogue-neo4j-answer-project",
+  "name": "Dialogue Manager — Neo4j Answer Flow",
+  "description": "BehaviorTrees.com project arranged right-to-left for easier viewing.",
+  "createdAt": "2026-09-29T11:56:23.935975Z",
+  "updatedAt": "2026-09-30T10:47:15.980Z"
+}
